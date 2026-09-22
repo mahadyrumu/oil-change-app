@@ -3,8 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { format } from "date-fns";
-import { Calendar, Clock, LogOut } from "lucide-react";
-import { logoutAction } from "@/lib/actions/auth";
+import { Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
@@ -31,11 +30,6 @@ export default async function DashboardPage() {
           <h1 className="text-3xl font-bold tracking-tight">Welcome, {session.user.name || 'User'}</h1>
           <p className="text-muted-foreground">Manage your appointments and vehicle service history.</p>
         </div>
-        <form action={logoutAction}>
-          <Button variant="outline" type="submit">
-            <LogOut className="w-4 h-4 mr-2" /> Sign Out
-          </Button>
-        </form>
       </div>
 
       <div className="space-y-6">

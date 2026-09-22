@@ -4,14 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Logo } from "@/components/logo";
+import type { Session } from "next-auth";
+import { logoutAction } from "@/lib/actions/auth";
 
-export function Header() {
+export function Header({ session }: { session: Session | null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
@@ -87,9 +89,22 @@ export function Header() {
 
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link href="/login" className="text-[14px] font-semibold text-muted-foreground hover:text-foreground px-4 transition-colors">
-                Log in
-              </Link>
+              {session?.user ? (
+                <div className="flex items-center space-x-4 border-r border-border pr-4 mr-2">
+                  <span className="text-[14px] font-semibold text-foreground">
+                    Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
+                  </span>
+                  <form action={logoutAction}>
+                    <Button variant="ghost" size="sm" type="submit" className="text-muted-foreground hover:text-foreground h-8 px-2 transition-colors">
+                      <LogOut className="w-4 h-4 mr-2" /> Sign Out
+                    </Button>
+                  </form>
+                </div>
+              ) : (
+                <Link href="/login" className="text-[14px] font-semibold text-muted-foreground hover:text-foreground px-4 transition-colors">
+                  Log in
+                </Link>
+              )}
               <Link 
                 href="/book" 
                 className={cn(
@@ -141,13 +156,26 @@ export function Header() {
               ))}
             </nav>
             <div className="flex flex-col items-center space-y-4 pt-8 w-full max-w-xs border-t border-border">
-              <Link 
-                href="/login" 
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
-              >
-                Log in
-              </Link>
+              {session?.user ? (
+                <div className="flex flex-col items-center space-y-3 pb-2 w-full">
+                  <span className="text-lg font-semibold text-foreground">
+                    Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
+                  </span>
+                  <form action={logoutAction} className="w-full">
+                    <Button variant="outline" size="lg" type="submit" className="w-full rounded-2xl font-semibold hover:bg-muted transition-colors">
+                      <LogOut className="w-5 h-5 mr-2" /> Sign Out
+                    </Button>
+                  </form>
+                </div>
+              ) : (
+                <Link 
+                  href="/login" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                >
+                  Log in
+                </Link>
+              )}
               <Link 
                 href="/book" 
                 onClick={() => setMobileMenuOpen(false)}

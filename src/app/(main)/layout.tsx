@@ -1,15 +1,17 @@
 import { Header } from "@/components/layout/header"
+import { auth } from "@/lib/auth"
 import { Logo } from "@/components/logo"
 import Link from "next/link"
 
-export default function MainLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const session = await auth()
   return (
     <>
-      <Header />
+      <Header session={session} />
       <main className="flex-1 flex flex-col">
         {children}
       </main>
