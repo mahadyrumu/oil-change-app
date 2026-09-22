@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Header } from "@/components/layout/header";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -20,65 +22,54 @@ export default function RootLayout({
       <body
         className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container flex h-16 items-center justify-between px-4 md:px-8 mx-auto">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="font-bold text-primary text-xl">AutoCare</span>
-            </Link>
-            <nav className="hidden md:flex gap-6">
-              <Link href="/services" className="text-sm font-medium hover:text-primary transition-colors">Services</Link>
-              <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">About Us</Link>
-              <Link href="/contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</Link>
-            </nav>
-            <div className="flex items-center gap-4">
-              <Link href="/login" className="text-sm font-medium hover:text-primary transition-colors hidden md:block">Log in</Link>
-              <Link href="/book" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">
-                Book Now
-              </Link>
-            </div>
-          </div>
-        </header>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <main className="flex-1 flex flex-col">
+            {children}
+          </main>
 
-        <main className="flex-1 flex flex-col">
-          {children}
-        </main>
-
-        <footer className="border-t bg-muted/40 py-8 mt-auto">
-          <div className="container mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <span className="font-bold text-primary text-xl">AutoCare</span>
-              <p className="mt-4 text-sm text-muted-foreground">
-                Premium oil change and vehicle maintenance services. Fast, reliable, and professional.
-              </p>
+          <footer className="border-t bg-muted/40 py-8 mt-auto">
+            <div className="container mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div>
+                <span className="font-bold text-primary text-xl">AutoCare</span>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  Premium oil change and vehicle maintenance services. Fast, reliable, and professional.
+                </p>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-4 text-foreground">Quick Links</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li><Link href="/services" className="hover:text-primary transition-colors">Our Services</Link></li>
+                  <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
+                  <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-4 text-foreground">Legal</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+                  <li><Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-4 text-foreground">Contact</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>123 Auto Drive, Garage City</li>
+                  <li>(555) 123-4567</li>
+                  <li>info@autocare.reevake.com</li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-foreground">Quick Links</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/services" className="hover:text-primary transition-colors">Our Services</Link></li>
-                <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
-                <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
-              </ul>
+            <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground pb-8">
+              © {new Date().getFullYear()} AutoCare. All rights reserved.
             </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-foreground">Legal</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4 text-foreground">Contact</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>123 Auto Drive, Garage City</li>
-                <li>(555) 123-4567</li>
-                <li>info@autocare.reevake.com</li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground pb-8">
-            © {new Date().getFullYear()} AutoCare. All rights reserved.
-          </div>
-        </footer>
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   );

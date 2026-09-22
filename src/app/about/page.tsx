@@ -1,119 +1,135 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Phone, Mail, Clock, Award, Users, ShieldCheck } from "lucide-react";
+import { Wrench, ShieldCheck, Clock, Award } from "lucide-react";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
+import Image from "next/image";
 
 export const metadata = {
-  title: "About Us | Oil Change Experts",
-  description: "Learn about our mission to provide the best automotive service experience.",
+  title: "About Us - AutoCare",
+  description: "Learn about our mission to revolutionize the auto care industry.",
 };
 
 export default function AboutPage() {
-  const values = [
-    {
-      icon: <Award className="w-8 h-8 text-primary" />,
-      title: "Excellence",
-      desc: "We use only premium synthetic blends and OEM filters."
-    },
-    {
-      icon: <Users className="w-8 h-8 text-[#10B981]" />,
-      title: "Community",
-      desc: "Family owned and operated, serving our local area since 1998."
-    },
-    {
-      icon: <ShieldCheck className="w-8 h-8 text-[#F59E0B]" />,
-      title: "Integrity",
-      desc: "Transparent pricing. No aggressive upselling. Ever."
-    }
-  ];
-
   return (
-    <div className="flex flex-col min-h-screen bg-[#F3F4F6] selection:bg-primary/30 selection:text-primary">
-      
-      {/* Hero Section */}
-      <section className="relative py-32 px-4 overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/10 to-transparent -z-10 blur-3xl" />
-        <div className="container mx-auto max-w-6xl">
-          <FadeIn className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
-                Our Story
-              </div>
-              <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-[#1F2937] leading-[1.1]">
-                Redefining the <br />
-                <span className="text-primary">Auto Care</span> Experience.
-              </h1>
-              <p className="text-xl text-[#1F2937]/70 font-medium leading-relaxed">
-                We believe that maintaining your vehicle shouldn't be a chore. It should be fast, transparent, and entirely stress-free. That's the standard we set every single day.
-              </p>
-            </div>
-            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-gradient-to-tr from-primary to-secondary">
-              {/* Fallback pattern since we don't have images yet */}
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] [background-size:24px_24px]" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-white/50 font-bold text-2xl tracking-widest uppercase">Premium Garage</span>
-              </div>
-            </div>
+    <div className="flex flex-col min-h-screen selection:bg-primary/30 selection:text-primary">
+      {/* Mini Hero */}
+      <section className="relative w-full py-32 flex flex-col justify-center overflow-hidden bg-background">
+        <div className="absolute inset-0 bg-[#0A1128]/80 dark:bg-[#0A1128]/95 z-10" />
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=3000&auto=format&fit=crop"
+            alt="Auto Mechanics"
+            fill
+            className="object-cover object-center"
+            priority
+          />
+        </div>
+        <div className="container mx-auto px-4 md:px-8 max-w-6xl relative z-30 text-center">
+          <FadeIn>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6">
+              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Story.</span>
+            </h1>
+            <p className="text-xl text-white/80 max-w-2xl mx-auto font-medium">
+              We started AutoCare because we were tired of the upselling, the waiting rooms, and the lack of transparency.
+            </p>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* The Mission */}
+      <section className="py-24 px-4 bg-background">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <FadeIn>
+              <div className="relative h-[500px] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-border">
+                <Image
+                  src="https://images.unsplash.com/photo-1503375894026-62181744155b?q=80&w=2000&auto=format&fit=crop"
+                  alt="Modern Garage"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.2} className="space-y-6">
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">Redefining the <br/> Garage Experience</h2>
+              <p className="text-lg text-muted-foreground font-medium leading-relaxed">
+                Founded in 2024, AutoCare was built on a simple premise: vehicle maintenance shouldn't disrupt your life. We've engineered our entire process around speed, quality, and complete transparency.
+              </p>
+              <p className="text-lg text-muted-foreground font-medium leading-relaxed">
+                By specializing exclusively in oil changes and routine fluid maintenance, our ASE-certified technicians perform these critical services with unparalleled precision and efficiency.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-6 pt-6">
+                <div className="border-l-4 border-primary pl-4">
+                  <p className="text-4xl font-extrabold text-foreground">10k+</p>
+                  <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-1">Vehicles Serviced</p>
+                </div>
+                <div className="border-l-4 border-secondary pl-4">
+                  <p className="text-4xl font-extrabold text-foreground">4.9</p>
+                  <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mt-1">Average Rating</p>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
       {/* Core Values */}
-      <section className="py-24 px-4 bg-white relative z-10">
+      <section className="py-24 px-4 bg-muted/30 border-t border-border/50">
         <div className="container mx-auto max-w-6xl">
-          <FadeIn className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl font-extrabold text-[#1F2937]">Our Core Values</h2>
-            <p className="text-[#1F2937]/60 text-lg max-w-2xl mx-auto font-medium">The principles that guide every wrench we turn and every customer we serve.</p>
+          <FadeIn className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Our DNA</h2>
+            <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
+              The core principles that guide every wrench we turn and every customer we serve.
+            </p>
           </FadeIn>
-          
-          <StaggerContainer className="grid md:grid-cols-3 gap-8">
-            {values.map((v, i) => (
-              <StaggerItem key={i}>
-                <Card className="border-none shadow-lg shadow-primary/5 bg-[#F3F4F6]/50 hover:bg-white hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 rounded-[2rem] h-full">
-                  <CardContent className="p-10 text-center space-y-6">
-                    <div className="mx-auto w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-md">
-                      {v.icon}
-                    </div>
-                    <h3 className="text-2xl font-bold text-[#1F2937]">{v.title}</h3>
-                    <p className="text-[#1F2937]/70 font-medium leading-relaxed">{v.desc}</p>
-                  </CardContent>
-                </Card>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
 
-      {/* Info Section */}
-      <section className="py-24 px-4 bg-[#1E3A8A] text-white">
-        <div className="container mx-auto max-w-6xl">
-          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <StaggerItem>
-              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
-                <MapPin className="w-10 h-10 text-[#F59E0B]" />
-                <h3 className="text-xl font-bold">Location</h3>
-                <p className="text-white/70 font-medium">123 Auto Care Blvd<br />Motor City, MI 48201</p>
-              </div>
+              <Card className="bg-card dark:bg-card border-border shadow-lg rounded-[2rem] hover:-translate-y-2 transition-all duration-300 h-full">
+                <CardContent className="p-8 text-center space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-primary/10 rounded-2xl flex items-center justify-center">
+                    <ShieldCheck className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold">Absolute Integrity</h3>
+                  <p className="text-muted-foreground font-medium">We never sell you a service you don't absolutely need.</p>
+                </CardContent>
+              </Card>
             </StaggerItem>
+            
             <StaggerItem>
-              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
-                <Clock className="w-10 h-10 text-[#10B981]" />
-                <h3 className="text-xl font-bold">Hours</h3>
-                <p className="text-white/70 font-medium">Mon-Fri: 8AM - 6PM<br />Sat: 9AM - 4PM</p>
-              </div>
+              <Card className="bg-card dark:bg-card border-border shadow-lg rounded-[2rem] hover:-translate-y-2 transition-all duration-300 h-full">
+                <CardContent className="p-8 text-center space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-secondary/10 rounded-2xl flex items-center justify-center">
+                    <Clock className="w-8 h-8 text-secondary" />
+                  </div>
+                  <h3 className="text-xl font-bold">Respect for Time</h3>
+                  <p className="text-muted-foreground font-medium">In and out in 30 minutes, keeping you on schedule.</p>
+                </CardContent>
+              </Card>
             </StaggerItem>
+
             <StaggerItem>
-              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
-                <Phone className="w-10 h-10 text-white" />
-                <h3 className="text-xl font-bold">Call Us</h3>
-                <p className="text-white/70 font-medium">(555) 123-4567<br />Emergency: (555) 999-0000</p>
-              </div>
+              <Card className="bg-card dark:bg-card border-border shadow-lg rounded-[2rem] hover:-translate-y-2 transition-all duration-300 h-full">
+                <CardContent className="p-8 text-center space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-accent/10 rounded-2xl flex items-center justify-center">
+                    <Wrench className="w-8 h-8 text-accent" />
+                  </div>
+                  <h3 className="text-xl font-bold">Surgical Precision</h3>
+                  <p className="text-muted-foreground font-medium">Clean, exact, and by the book for every make and model.</p>
+                </CardContent>
+              </Card>
             </StaggerItem>
+
             <StaggerItem>
-              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
-                <Mail className="w-10 h-10 text-white" />
-                <h3 className="text-xl font-bold">Email</h3>
-                <p className="text-white/70 font-medium">service@oilchange.com<br />support@oilchange.com</p>
-              </div>
+              <Card className="bg-card dark:bg-card border-border shadow-lg rounded-[2rem] hover:-translate-y-2 transition-all duration-300 h-full">
+                <CardContent className="p-8 text-center space-y-4">
+                  <div className="w-16 h-16 mx-auto bg-blue-500/10 rounded-2xl flex items-center justify-center">
+                    <Award className="w-8 h-8 text-blue-500" />
+                  </div>
+                  <h3 className="text-xl font-bold">Premium Quality</h3>
+                  <p className="text-muted-foreground font-medium">We exclusively use top-tier synthetic fluids and OEM filters.</p>
+                </CardContent>
+              </Card>
             </StaggerItem>
           </StaggerContainer>
         </div>
