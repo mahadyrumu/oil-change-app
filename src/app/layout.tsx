@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
+import { Logo } from "@/components/logo";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -18,9 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <body
         className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col`}
+        suppressHydrationWarning
       >
         <ThemeProvider
           attribute="class"
@@ -36,8 +39,10 @@ export default function RootLayout({
           <footer className="border-t bg-muted/40 py-8 mt-auto">
             <div className="container mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
               <div>
-                <span className="font-bold text-primary text-xl">AutoCare</span>
-                <p className="mt-4 text-sm text-muted-foreground">
+                <Link href="/" className="inline-block mb-4 hover:opacity-80 transition-opacity">
+                  <Logo />
+                </Link>
+                <p className="text-sm text-muted-foreground">
                   Premium oil change and vehicle maintenance services. Fast, reliable, and professional.
                 </p>
               </div>
@@ -66,7 +71,7 @@ export default function RootLayout({
               </div>
             </div>
             <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground pb-8">
-              © {new Date().getFullYear()} AutoCare. All rights reserved.
+              © {new Date().getFullYear()} Manhattan Oil Change. All rights reserved.
             </div>
           </footer>
         </ThemeProvider>
