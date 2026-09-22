@@ -27,7 +27,7 @@ export default async function AdminLayout({
         <div className="h-16 flex items-center px-6 border-b">
           <Link href="/admin" className="flex items-center gap-2">
             <Logo />
-            <span className="font-bold text-lg hidden lg:block tracking-tight text-foreground">AutoCare <span className="text-xs text-primary font-mono uppercase border border-primary/30 px-1.5 py-0.5 rounded ml-1 bg-primary/10">Admin</span></span>
+            <span className="text-[10px] text-primary font-mono uppercase border border-primary/30 px-1.5 py-0.5 rounded bg-primary/10 mb-1 self-end hidden lg:block">Admin</span>
           </Link>
         </div>
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
@@ -56,7 +56,7 @@ export default async function AdminLayout({
         <div className="md:hidden h-16 border-b bg-background flex items-center justify-between px-4">
           <Link href="/admin" className="flex items-center gap-2">
             <Logo />
-            <span className="font-bold">Admin</span>
+            <span className="text-[10px] text-primary font-mono uppercase border border-primary/30 px-1.5 py-0.5 rounded bg-primary/10">Admin</span>
           </Link>
           <form action={logoutAction}>
             <button className="p-2 text-muted-foreground">
