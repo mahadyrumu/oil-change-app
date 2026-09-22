@@ -35,7 +35,7 @@ export function Header({ session }: { session: Session | null }) {
   return (
     <>
       {session?.user && (
-        <div className="fixed top-0 inset-x-0 h-10 bg-background border-b border-border z-[60] flex items-center justify-end px-4 md:px-8 space-x-6">
+        <div className="fixed top-0 inset-x-0 h-10 bg-background border-b border-border z-[60] hidden md:flex items-center justify-end px-4 md:px-8 space-x-6">
           <span className="text-[14px] font-semibold text-foreground">
             Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
           </span>
@@ -55,7 +55,7 @@ export function Header({ session }: { session: Session | null }) {
         className={cn(
           "fixed inset-x-0 z-50 transition-all duration-500 flex justify-center",
           session?.user 
-            ? (isScrolled ? "top-14 px-4" : "top-10 px-0")
+            ? (isScrolled ? "top-4 md:top-14 px-4" : "top-0 md:top-10 px-0")
             : (isScrolled ? "top-4 px-4" : "top-0 px-0")
         )}
       >
@@ -104,25 +104,29 @@ export function Header({ session }: { session: Session | null }) {
             <div className="hidden md:flex items-center space-x-4">
               {session?.user ? (
                 session.user.role === 'ADMIN' ? (
-                  <Link 
-                    href="/admin" 
-                    className={cn(
-                      buttonVariants({ size: "sm", variant: "outline" }), 
-                      "rounded-full font-bold px-6 h-10"
-                    )}
-                  >
-                    Admin Panel
-                  </Link>
+                  pathname !== '/admin' && (
+                    <Link 
+                      href="/admin" 
+                      className={cn(
+                        buttonVariants({ size: "sm", variant: "outline" }), 
+                        "rounded-full font-bold px-6 h-10"
+                      )}
+                    >
+                      Admin Panel
+                    </Link>
+                  )
                 ) : (
-                  <Link 
-                    href="/dashboard" 
-                    className={cn(
-                      buttonVariants({ size: "sm", variant: "outline" }), 
-                      "rounded-full font-bold px-6 h-10"
-                    )}
-                  >
-                    My Dashboard
-                  </Link>
+                  pathname !== '/dashboard' && (
+                    <Link 
+                      href="/dashboard" 
+                      className={cn(
+                        buttonVariants({ size: "sm", variant: "outline" }), 
+                        "rounded-full font-bold px-6 h-10"
+                      )}
+                    >
+                      My Dashboard
+                    </Link>
+                  )
                 )
               ) : (
                 <Link href="/login" className="text-[14px] font-semibold text-muted-foreground hover:text-foreground px-4 transition-colors">
@@ -181,23 +185,37 @@ export function Header({ session }: { session: Session | null }) {
             </nav>
             <div className="flex flex-col items-center space-y-4 pt-8 w-full max-w-xs border-t border-border">
               {session?.user ? (
-                session.user.role === 'ADMIN' ? (
-                  <Link 
-                    href="/admin" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
-                  >
-                    Admin Panel
-                  </Link>
-                ) : (
-                  <Link 
-                    href="/dashboard" 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
-                  >
-                    My Dashboard
-                  </Link>
-                )
+                <div className="flex flex-col items-center space-y-3 pb-2 w-full">
+                  <span className="text-lg font-semibold text-foreground">
+                    Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
+                  </span>
+                  {session.user.role === 'ADMIN' ? (
+                    pathname !== '/admin' && (
+                      <Link 
+                        href="/admin" 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                      >
+                        Admin Panel
+                      </Link>
+                    )
+                  ) : (
+                    pathname !== '/dashboard' && (
+                      <Link 
+                        href="/dashboard" 
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                      >
+                        My Dashboard
+                      </Link>
+                    )
+                  )}
+                  <form action={logoutAction} className="w-full">
+                    <Button variant="outline" size="lg" type="submit" className="w-full rounded-2xl font-semibold hover:bg-muted transition-colors">
+                      <LogOut className="w-5 h-5 mr-2" /> Sign Out
+                    </Button>
+                  </form>
+                </div>
               ) : (
                 <Link 
                   href="/login" 
