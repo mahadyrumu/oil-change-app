@@ -171,7 +171,6 @@ export function Header({ session }: { session: Session | null }) {
             className="fixed inset-0 z-40 bg-background/95 backdrop-blur-3xl flex flex-col items-center justify-center space-y-8"
           >
             <nav className="flex flex-col items-center space-y-6 text-2xl font-bold tracking-tight">
-              <Link href="/" onClick={() => setMobileMenuOpen(false)} className={pathname === "/" ? "text-secondary dark:text-primary" : "text-foreground"}>Home</Link>
               {navLinks.map((link) => (
                 <Link 
                   key={link.name}
@@ -186,7 +185,7 @@ export function Header({ session }: { session: Session | null }) {
             <div className="flex flex-col items-center space-y-4 pt-8 w-full max-w-xs border-t border-border">
               {session?.user ? (
                 <div className="flex flex-col items-center space-y-3 pb-2 w-full">
-                  <span className="text-lg font-semibold text-foreground">
+                  <span className="text-lg font-semibold text-foreground mb-2">
                     Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
                   </span>
                   {session.user.role === 'ADMIN' ? (
@@ -194,7 +193,7 @@ export function Header({ session }: { session: Session | null }) {
                       <Link 
                         href="/admin" 
                         onClick={() => setMobileMenuOpen(false)}
-                        className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                        className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-full font-semibold h-12")}
                       >
                         Admin Panel
                       </Link>
@@ -204,14 +203,14 @@ export function Header({ session }: { session: Session | null }) {
                       <Link 
                         href="/dashboard" 
                         onClick={() => setMobileMenuOpen(false)}
-                        className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                        className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-full font-semibold h-12")}
                       >
                         My Dashboard
                       </Link>
                     )
                   )}
                   <form action={logoutAction} className="w-full">
-                    <Button variant="outline" size="lg" type="submit" className="w-full rounded-2xl font-semibold hover:bg-muted transition-colors">
+                    <Button variant="outline" size="lg" type="submit" className="w-full rounded-full font-semibold h-12 hover:bg-muted transition-colors">
                       <LogOut className="w-5 h-5 mr-2" /> Sign Out
                     </Button>
                   </form>
@@ -220,7 +219,7 @@ export function Header({ session }: { session: Session | null }) {
                 <Link 
                   href="/login" 
                   onClick={() => setMobileMenuOpen(false)}
-                  className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                  className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-full font-semibold h-12")}
                 >
                   Log in
                 </Link>
@@ -228,7 +227,7 @@ export function Header({ session }: { session: Session | null }) {
               <Link 
                 href="/book" 
                 onClick={() => setMobileMenuOpen(false)}
-                className={cn(buttonVariants({ size: "lg" }), "w-full rounded-2xl shadow-xl shadow-primary/20 font-semibold")}
+                className={cn(buttonVariants({ size: "lg" }), "w-full rounded-full shadow-xl shadow-primary/20 font-semibold h-12")}
               >
                 Book Appointment
               </Link>
