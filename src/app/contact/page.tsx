@@ -1,146 +1,94 @@
-"use client"
+import { ContactForm } from "@/components/forms/contact-form";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
-import { useActionState, useEffect } from "react";
-import { submitContactForm } from "@/lib/actions/contact";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { MapPin, Phone, Mail } from "lucide-react";
-import { toast } from "sonner";
+export const metadata = {
+  title: "Contact Us | Oil Change Experts",
+  description: "Get in touch with our team for any questions or support.",
+};
 
 export default function ContactPage() {
-  const [state, formAction, isPending] = useActionState(submitContactForm, { 
-    success: false, 
-    message: "", 
-    errors: {} 
-  });
-
-  useEffect(() => {
-    if (state.success) {
-      toast.success(state.message);
-      // Reset form visually (in a real app, you might use a ref to reset the DOM form)
-    } else if (state.message && !state.success) {
-      toast.error(state.message);
-    }
-  }, [state]);
-
   return (
-    <div className="container mx-auto px-4 py-12 md:py-24 max-w-6xl">
-      <div className="grid md:grid-cols-2 gap-12">
-        {/* Contact Information & Map */}
-        <div className="space-y-8">
-          <div>
-            <h1 className="text-4xl font-bold tracking-tight mb-4">Get in Touch</h1>
-            <p className="text-muted-foreground text-lg">
-              Have a question about our services or need to schedule a specific repair? Send us a message and our expert team will respond as soon as possible.
-            </p>
-          </div>
+    <div className="flex flex-col min-h-screen bg-[#F3F4F6] selection:bg-primary/30 selection:text-primary pt-24">
+      {/* Abstract Background Gradient */}
+      <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[60vw] h-[60vw] rounded-full bg-primary/5 blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[50vw] h-[50vw] rounded-full bg-secondary/5 blur-[100px]" />
+      </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            <Card>
-              <CardContent className="p-6 flex items-start space-x-4">
-                <MapPin className="w-6 h-6 text-primary mt-1" />
-                <div>
-                  <h3 className="font-semibold mb-1">Our Location</h3>
-                  <p className="text-sm text-muted-foreground">123 Auto Care Blvd<br/>Metropolis, NY 10001</p>
-                </div>
+      <div className="container mx-auto px-4 py-16 max-w-6xl relative z-10">
+        <FadeIn className="text-center space-y-4 mb-16">
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-[#1F2937]">Let's Connect</h1>
+          <p className="text-xl text-[#1F2937]/70 max-w-2xl mx-auto font-medium leading-relaxed">
+            Have a question about our services? Need technical support? Our team is standing by to help.
+          </p>
+        </FadeIn>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          
+          <StaggerContainer className="space-y-8">
+            <StaggerItem>
+              <h2 className="text-3xl font-extrabold text-[#1F2937]">Contact Information</h2>
+              <p className="text-[#1F2937]/70 font-medium mt-2">Reach out directly using the info below or fill out the form.</p>
+            </StaggerItem>
+
+            <StaggerItem>
+              <Card className="border-none shadow-xl shadow-primary/5 bg-white/60 backdrop-blur-xl rounded-[2rem] hover:bg-white hover:shadow-2xl transition-all duration-300">
+                <CardContent className="p-8 space-y-6">
+                  <div className="flex items-start">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mr-6 shrink-0">
+                      <MapPin className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-[#1F2937]">Our Garage</h3>
+                      <p className="text-[#1F2937]/70 font-medium mt-1 leading-relaxed">
+                        123 Auto Care Blvd<br />
+                        Motor City, MI 48201
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start">
+                    <div className="w-12 h-12 rounded-xl bg-[#10B981]/10 flex items-center justify-center mr-6 shrink-0">
+                      <Phone className="w-6 h-6 text-[#10B981]" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-[#1F2937]">Phone</h3>
+                      <p className="text-[#1F2937]/70 font-medium mt-1 leading-relaxed">
+                        (555) 123-4567<br />
+                        <span className="text-xs uppercase font-bold text-[#10B981]">24/7 Emergency Line</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start">
+                    <div className="w-12 h-12 rounded-xl bg-[#F59E0B]/10 flex items-center justify-center mr-6 shrink-0">
+                      <Clock className="w-6 h-6 text-[#F59E0B]" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-[#1F2937]">Business Hours</h3>
+                      <p className="text-[#1F2937]/70 font-medium mt-1 leading-relaxed">
+                        Mon - Fri: 8:00 AM - 6:00 PM<br />
+                        Saturday: 9:00 AM - 4:00 PM<br />
+                        Sunday: Closed
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </StaggerItem>
+          </StaggerContainer>
+
+          <FadeIn direction="left" delay={0.2} className="relative h-full">
+            <Card className="border-none shadow-2xl bg-white rounded-[2rem] overflow-hidden">
+              <CardContent className="p-8 md:p-12">
+                <h2 className="text-3xl font-extrabold text-[#1F2937] mb-8">Send a Message</h2>
+                <ContactForm />
               </CardContent>
             </Card>
-            <Card>
-              <CardContent className="p-6 flex items-start space-x-4">
-                <Phone className="w-6 h-6 text-primary mt-1" />
-                <div>
-                  <h3 className="font-semibold mb-1">Call Us</h3>
-                  <p className="text-sm text-muted-foreground">(555) 123-4567<br/>Mon-Sat, 8am-6pm</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Google Maps Iframe Placeholder */}
-          <div className="w-full h-[300px] bg-muted rounded-xl overflow-hidden border border-border">
-            <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968459391!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1689253304567!5m2!1sen!2sus" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen={true} 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+          </FadeIn>
         </div>
-
-        {/* Contact Form */}
-        <Card className="h-fit">
-          <CardHeader>
-            <CardTitle className="text-2xl">Send a Message</CardTitle>
-            <CardDescription>Fill out the form below and we'll get back to you.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form action={formAction} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input 
-                  id="name" 
-                  name="name" 
-                  placeholder="John Doe" 
-                  aria-describedby="name-error"
-                />
-                {state.errors?.name && (
-                  <p id="name-error" className="text-sm text-destructive font-medium">{state.errors.name[0]}</p>
-                )}
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input 
-                  id="email" 
-                  name="email" 
-                  type="email" 
-                  placeholder="john@example.com" 
-                  aria-describedby="email-error"
-                />
-                {state.errors?.email && (
-                  <p id="email-error" className="text-sm text-destructive font-medium">{state.errors.email[0]}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input 
-                  id="subject" 
-                  name="subject" 
-                  placeholder="How can we help you?" 
-                  aria-describedby="subject-error"
-                />
-                {state.errors?.subject && (
-                  <p id="subject-error" className="text-sm text-destructive font-medium">{state.errors.subject[0]}</p>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea 
-                  id="message" 
-                  name="message" 
-                  placeholder="Please describe your inquiry in detail..." 
-                  className="min-h-[150px]"
-                  aria-describedby="message-error"
-                />
-                {state.errors?.message && (
-                  <p id="message-error" className="text-sm text-destructive font-medium">{state.errors.message[0]}</p>
-                )}
-              </div>
-
-              <Button type="submit" className="w-full" disabled={isPending}>
-                {isPending ? "Sending Message..." : "Send Message"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

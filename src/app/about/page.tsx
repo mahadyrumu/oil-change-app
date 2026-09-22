@@ -1,139 +1,121 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Clock, Phone, Mail } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { MapPin, Phone, Mail, Clock, Award, Users, ShieldCheck } from "lucide-react";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
 export const metadata = {
   title: "About Us | Oil Change Experts",
-  description: "Learn about our history, meet our expert mechanics, and find our location and hours.",
+  description: "Learn about our mission to provide the best automotive service experience.",
 };
 
 export default function AboutPage() {
+  const values = [
+    {
+      icon: <Award className="w-8 h-8 text-primary" />,
+      title: "Excellence",
+      desc: "We use only premium synthetic blends and OEM filters."
+    },
+    {
+      icon: <Users className="w-8 h-8 text-[#10B981]" />,
+      title: "Community",
+      desc: "Family owned and operated, serving our local area since 1998."
+    },
+    {
+      icon: <ShieldCheck className="w-8 h-8 text-[#F59E0B]" />,
+      title: "Integrity",
+      desc: "Transparent pricing. No aggressive upselling. Ever."
+    }
+  ];
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#F3F4F6] selection:bg-primary/30 selection:text-primary">
+      
       {/* Hero Section */}
-      <section className="bg-muted py-20 px-4 text-center">
-        <div className="container mx-auto max-w-4xl">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">About Our Shop</h1>
-          <p className="text-xl text-muted-foreground">
-            Providing premium automotive care and oil change services with integrity and speed since 2010.
-          </p>
-        </div>
-      </section>
-
-      {/* History & Mission */}
-      <section className="py-20 px-4 container mx-auto max-w-5xl">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl font-bold mb-6">Our History</h2>
-            <p className="text-muted-foreground mb-4 leading-relaxed">
-              Started in a small two-bay garage over a decade ago, our mission was simple: provide honest, high-quality, and fast oil changes without the aggressive upselling found at chain stores.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Today, we have grown into a state-of-the-art facility, but our core values remain the same. We treat every vehicle as if it were our own, using only premium synthetic blends and top-tier filters.
-            </p>
-          </div>
-          <div className="bg-primary/10 p-8 rounded-2xl border border-primary/20">
-            <h3 className="text-2xl font-semibold mb-4 text-primary">Our Mission</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start">
-                <div className="bg-primary text-primary-foreground p-1 rounded-full mr-3 mt-1">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <span><strong>Transparency:</strong> You only pay for what your car actually needs.</span>
-              </li>
-              <li className="flex items-start">
-                <div className="bg-primary text-primary-foreground p-1 rounded-full mr-3 mt-1">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <span><strong>Speed:</strong> Get back on the road in under 30 minutes.</span>
-              </li>
-              <li className="flex items-start">
-                <div className="bg-primary text-primary-foreground p-1 rounded-full mr-3 mt-1">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                </div>
-                <span><strong>Quality:</strong> Premium fluids and filters for every single service.</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="bg-muted/50 py-20 px-4">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Meet the Experts</h2>
-            <p className="text-muted-foreground">Our ASE-certified technicians have decades of combined experience.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { name: "John Davis", role: "Master Mechanic", exp: "15 Years Experience" },
-              { name: "Sarah Miller", role: "Service Manager", exp: "8 Years Experience" },
-              { name: "Mike Chen", role: "Lube Technician", exp: "5 Years Experience" }
-            ].map((member) => (
-              <Card key={member.name} className="text-center">
-                <CardHeader>
-                  <div className="w-24 h-24 bg-primary/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-2xl font-bold text-primary">{member.name.charAt(0)}</span>
-                  </div>
-                  <CardTitle>{member.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="font-medium text-primary">{member.role}</p>
-                  <p className="text-sm text-muted-foreground mt-2">{member.exp}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Location & Hours */}
-      <section className="py-20 px-4 container mx-auto max-w-5xl">
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-3xl font-bold mb-6">Location & Hours</h2>
-            <p className="text-muted-foreground mb-8">
-              Conveniently located in the heart of downtown. Walk-ins are welcome, but appointments are highly recommended to ensure zero wait time.
-            </p>
-            <div className="space-y-6">
-              <div className="flex items-center text-muted-foreground">
-                <MapPin className="w-6 h-6 text-primary mr-4" />
-                <span>123 Auto Care Blvd<br/>Metropolis, NY 10001</span>
+      <section className="relative py-32 px-4 overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/10 to-transparent -z-10 blur-3xl" />
+        <div className="container mx-auto max-w-6xl">
+          <FadeIn className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
+                Our Story
               </div>
-              <div className="flex items-center text-muted-foreground">
-                <Phone className="w-6 h-6 text-primary mr-4" />
-                <span>(555) 123-4567</span>
-              </div>
-              <div className="flex items-center text-muted-foreground">
-                <Mail className="w-6 h-6 text-primary mr-4" />
-                <span>service@oilchangeexperts.com</span>
+              <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-[#1F2937] leading-[1.1]">
+                Redefining the <br />
+                <span className="text-primary">Auto Care</span> Experience.
+              </h1>
+              <p className="text-xl text-[#1F2937]/70 font-medium leading-relaxed">
+                We believe that maintaining your vehicle shouldn't be a chore. It should be fast, transparent, and entirely stress-free. That's the standard we set every single day.
+              </p>
+            </div>
+            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-gradient-to-tr from-primary to-secondary">
+              {/* Fallback pattern since we don't have images yet */}
+              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_white_1px,_transparent_1px)] [background-size:24px_24px]" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-white/50 font-bold text-2xl tracking-widest uppercase">Premium Garage</span>
               </div>
             </div>
-          </div>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center text-xl">
-                <Clock className="w-5 h-5 mr-2 text-primary" />
-                Business Hours
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-4">
-                <li className="flex justify-between border-b pb-2">
-                  <span className="font-medium">Monday - Friday</span>
-                  <span className="text-muted-foreground">8:00 AM - 6:00 PM</span>
-                </li>
-                <li className="flex justify-between border-b pb-2">
-                  <span className="font-medium">Saturday</span>
-                  <span className="text-muted-foreground">9:00 AM - 4:00 PM</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="font-medium text-destructive">Sunday</span>
-                  <span className="text-muted-foreground">Closed</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="py-24 px-4 bg-white relative z-10">
+        <div className="container mx-auto max-w-6xl">
+          <FadeIn className="text-center mb-16 space-y-4">
+            <h2 className="text-4xl font-extrabold text-[#1F2937]">Our Core Values</h2>
+            <p className="text-[#1F2937]/60 text-lg max-w-2xl mx-auto font-medium">The principles that guide every wrench we turn and every customer we serve.</p>
+          </FadeIn>
+          
+          <StaggerContainer className="grid md:grid-cols-3 gap-8">
+            {values.map((v, i) => (
+              <StaggerItem key={i}>
+                <Card className="border-none shadow-lg shadow-primary/5 bg-[#F3F4F6]/50 hover:bg-white hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 rounded-[2rem] h-full">
+                  <CardContent className="p-10 text-center space-y-6">
+                    <div className="mx-auto w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-md">
+                      {v.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold text-[#1F2937]">{v.title}</h3>
+                    <p className="text-[#1F2937]/70 font-medium leading-relaxed">{v.desc}</p>
+                  </CardContent>
+                </Card>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* Info Section */}
+      <section className="py-24 px-4 bg-[#1E3A8A] text-white">
+        <div className="container mx-auto max-w-6xl">
+          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <StaggerItem>
+              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
+                <MapPin className="w-10 h-10 text-[#F59E0B]" />
+                <h3 className="text-xl font-bold">Location</h3>
+                <p className="text-white/70 font-medium">123 Auto Care Blvd<br />Motor City, MI 48201</p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
+                <Clock className="w-10 h-10 text-[#10B981]" />
+                <h3 className="text-xl font-bold">Hours</h3>
+                <p className="text-white/70 font-medium">Mon-Fri: 8AM - 6PM<br />Sat: 9AM - 4PM</p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
+                <Phone className="w-10 h-10 text-white" />
+                <h3 className="text-xl font-bold">Call Us</h3>
+                <p className="text-white/70 font-medium">(555) 123-4567<br />Emergency: (555) 999-0000</p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="flex flex-col items-center text-center space-y-4 p-6 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors">
+                <Mail className="w-10 h-10 text-white" />
+                <h3 className="text-xl font-bold">Email</h3>
+                <p className="text-white/70 font-medium">service@oilchange.com<br />support@oilchange.com</p>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
     </div>
