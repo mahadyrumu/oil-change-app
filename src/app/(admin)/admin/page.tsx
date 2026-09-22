@@ -1,17 +1,36 @@
 import { prisma } from "@/lib/db"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Users, Calendar, DollarSign, Activity } from "lucide-react"
+import { DashboardFilter } from "./dashboard-filter"
+import { DashboardCharts } from "./dashboard-charts"
+import { subDays, subYears } from "date-fns"
 
 export const metadata = {
   title: "Admin Dashboard | Oil Change Experts",
 }
 
-export default async function AdminDashboardPage() {
-  const [totalCustomers, totalAppointments, totalRevenueResult, recentAppointments] = await Promise.all([
-    prisma.user.count({ where: { role: 'CUSTOMER' } }),
-    prisma.appointment.count(),
+export default async function AdminDashboardPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+  const searchParams = await props.searchParams;
+  const range = (searchParams.range as string) || '30d';
+  
+  let startDate = new Date(0); // All time by default
+  const now = new Date();
+  
+  if (range === '7d') startDate = subDays(now, 7);
+  else if (range === '30d') startDate = subDays(now, 30);
+  else if (range === '90d') startDate = subDays(now, 90);
+  else if (range === '1y') startDate = subYears(now, 1);
+
+  // We fetch customers created after the startDate
+  const [totalCustomers, totalAppointments, appointmentsInRange, recentAppointments] = await Promise.all([
+    prisma.user.count({ 
+      where: { role: 'CUSTOMER', createdAt: { gte: startDate } } 
+    }),
+    prisma.appointment.count({
+      where: { date: { gte: startDate } }
+    }),
     prisma.appointment.findMany({
-      where: { status: 'COMPLETED' },
+      where: { date: { gte: startDate } },
       include: { service: true }
     }),
     prisma.appointment.findMany({
@@ -21,16 +40,21 @@ export default async function AdminDashboardPage() {
     })
   ])
 
-  // Calculate total revenue from completed appointments
-  const totalRevenue = totalRevenueResult.reduce((sum, apt) => sum + apt.service.price, 0)
+  // Calculate total revenue from completed appointments in range
+  const totalRevenue = appointmentsInRange
+    .filter(a => a.status === 'COMPLETED')
+    .reduce((sum, apt) => sum + apt.service.price, 0)
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
-        <p className="text-muted-foreground mt-1">
-          Welcome back to the admin portal. Here's what's happening with the business today.
-        </p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard Overview</h1>
+          <p className="text-muted-foreground mt-1">
+            Welcome back to the admin portal. Here's what's happening with the business.
+          </p>
+        </div>
+        <DashboardFilter />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -76,7 +100,9 @@ export default async function AdminDashboardPage() {
         </Card>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      <DashboardCharts appointments={appointmentsInRange} />
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-8">
         <Card className="col-span-4 lg:col-span-4">
           <CardHeader>
             <CardTitle>Recent Bookings</CardTitle>
