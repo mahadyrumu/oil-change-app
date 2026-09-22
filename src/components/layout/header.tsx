@@ -34,6 +34,19 @@ export function Header({ session }: { session: Session | null }) {
 
   return (
     <>
+      {session?.user && (
+        <div className="fixed top-0 inset-x-0 h-10 bg-background border-b border-border z-[60] flex items-center justify-end px-4 md:px-8 space-x-6">
+          <span className="text-[14px] font-semibold text-foreground">
+            Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
+          </span>
+          <form action={logoutAction}>
+            <button type="submit" className="flex items-center text-[14px] font-medium text-muted-foreground hover:text-foreground transition-colors outline-none">
+              <LogOut className="w-4 h-4 mr-2" /> Sign Out
+            </button>
+          </form>
+        </div>
+      )}
+
       {/* 
         V5 Header - Floating Glassmorphism Pill 
         When at the top, it rests cleanly. When scrolled, it shrinks into a floating pill with heavy blur.
@@ -41,9 +54,9 @@ export function Header({ session }: { session: Session | null }) {
       <header 
         className={cn(
           "fixed inset-x-0 z-50 transition-all duration-500 flex justify-center",
-          isScrolled 
-            ? "top-4 px-4" 
-            : "top-0 px-0"
+          session?.user 
+            ? (isScrolled ? "top-14 px-4" : "top-10 px-0")
+            : (isScrolled ? "top-4 px-4" : "top-0 px-0")
         )}
       >
         <div 
@@ -90,16 +103,27 @@ export function Header({ session }: { session: Session | null }) {
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-4">
               {session?.user ? (
-                <div className="flex items-center space-x-4 border-r border-border pr-4 mr-2">
-                  <span className="text-[14px] font-semibold text-foreground">
-                    Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
-                  </span>
-                  <form action={logoutAction}>
-                    <Button variant="ghost" size="sm" type="submit" className="text-muted-foreground hover:text-foreground h-8 px-2 transition-colors">
-                      <LogOut className="w-4 h-4 mr-2" /> Sign Out
-                    </Button>
-                  </form>
-                </div>
+                session.user.role === 'ADMIN' ? (
+                  <Link 
+                    href="/admin" 
+                    className={cn(
+                      buttonVariants({ size: "sm", variant: "outline" }), 
+                      "rounded-full font-bold px-6 h-10"
+                    )}
+                  >
+                    Admin Panel
+                  </Link>
+                ) : (
+                  <Link 
+                    href="/dashboard" 
+                    className={cn(
+                      buttonVariants({ size: "sm", variant: "outline" }), 
+                      "rounded-full font-bold px-6 h-10"
+                    )}
+                  >
+                    My Dashboard
+                  </Link>
+                )
               ) : (
                 <Link href="/login" className="text-[14px] font-semibold text-muted-foreground hover:text-foreground px-4 transition-colors">
                   Log in
@@ -157,16 +181,23 @@ export function Header({ session }: { session: Session | null }) {
             </nav>
             <div className="flex flex-col items-center space-y-4 pt-8 w-full max-w-xs border-t border-border">
               {session?.user ? (
-                <div className="flex flex-col items-center space-y-3 pb-2 w-full">
-                  <span className="text-lg font-semibold text-foreground">
-                    Hello, <span className="text-secondary dark:text-primary">{session.user.name?.split(" ")[0] || "User"}</span>
-                  </span>
-                  <form action={logoutAction} className="w-full">
-                    <Button variant="outline" size="lg" type="submit" className="w-full rounded-2xl font-semibold hover:bg-muted transition-colors">
-                      <LogOut className="w-5 h-5 mr-2" /> Sign Out
-                    </Button>
-                  </form>
-                </div>
+                session.user.role === 'ADMIN' ? (
+                  <Link 
+                    href="/admin" 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                  >
+                    Admin Panel
+                  </Link>
+                ) : (
+                  <Link 
+                    href="/dashboard" 
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full rounded-2xl font-semibold")}
+                  >
+                    My Dashboard
+                  </Link>
+                )
               ) : (
                 <Link 
                   href="/login" 
