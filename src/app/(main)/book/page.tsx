@@ -22,7 +22,7 @@ export default async function BookPage() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-12 md:py-24 max-w-5xl min-h-screen">
+    <div className="container mx-auto px-4 pt-32 pb-12 max-w-5xl min-h-screen">
       <div className="mb-10 text-center space-y-4">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Schedule Your Service</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

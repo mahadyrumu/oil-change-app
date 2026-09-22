@@ -25,7 +25,7 @@ export default async function DashboardPage() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-5xl min-h-screen">
+    <div className="container mx-auto px-4 pt-32 pb-12 max-w-5xl min-h-screen">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Welcome, {session.user.name || 'User'}</h1>
