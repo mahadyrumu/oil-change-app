@@ -84,7 +84,7 @@ export default function PricingPage() {
                   </ul>
 
                   <Link 
-                    href={`/services?serviceId=${tier.id}#booking`}
+                    href="/services#booking"
                     className={cn(
                       buttonVariants({ variant: pkg.popular ? "default" : "outline", size: "sm" }),
                       "w-full rounded-xl h-10 font-bold text-sm shrink-0 mt-auto",
