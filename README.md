@@ -122,3 +122,17 @@ This repository is integrated with Vercel.
 - All commits merged into the `main` branch trigger an automatic build and production deployment.
 - Ephemeral task branches (`feat/*`, `fix/*`) are strictly merged through `staging` before reaching `main`.
 - Prisma Client generation is guaranteed during the Vercel build via a `postinstall` script in `package.json`.
+
+---
+
+## 🔑 Testing Credentials
+
+To test the application locally or on staging, you can use the following mock accounts:
+
+**Administrator Account:**
+- **Email:** `admin@reevake.com`
+- **Password:** `admin123`
+
+**Customer Accounts:**
+- **Email:** `customer1@example.com` (up to `customer5@example.com`)
+- **Password:** `password123`

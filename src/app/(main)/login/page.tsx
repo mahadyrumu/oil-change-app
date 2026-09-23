@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, Suspense } from "react";
 import { loginAction } from "@/lib/actions/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   const [state, formAction, isPending] = useActionState(loginAction, { 
     success: false, 
     message: "", 
@@ -21,10 +23,10 @@ export default function LoginPage() {
   useEffect(() => {
     if (state.success) {
       toast.success(state.message);
-      // NextAuth automatically redirects, but since we set redirect: false in signIn
-      // we handle it manually here to ensure a smooth SPA feel.
-      router.push("/dashboard"); 
-      router.refresh();
+      // Hard redirect to ensure Next.js session cookie is fully propagated.
+      // router.push() is a client-side navigation that can race with the newly
+      // set session cookie; window.location.href forces a full browser reload.
+      window.location.href = callbackUrl;
     } else if (state.message && !state.success) {
       toast.error(state.message);
     }
@@ -83,5 +85,13 @@ export default function LoginPage() {
         </CardFooter>
       </Card>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }

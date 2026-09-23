@@ -17,7 +17,7 @@ const registerSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export async function loginAction(prevState: any, formData: FormData) {
+export async function loginAction(prevState: unknown, formData: FormData) {
   const data = Object.fromEntries(formData);
   const parsed = loginSchema.safeParse(data);
 
@@ -51,7 +51,7 @@ export async function loginAction(prevState: any, formData: FormData) {
   }
 }
 
-export async function registerAction(prevState: any, formData: FormData) {
+export async function registerAction(prevState: unknown, formData: FormData) {
   const data = Object.fromEntries(formData);
   const parsed = registerSchema.safeParse(data);
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, Suspense } from "react";
 import { registerAction } from "@/lib/actions/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { toast } from "sonner";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const [state, formAction, isPending] = useActionState(registerAction, { 
     success: false, 
     message: "", 
@@ -21,8 +23,10 @@ export default function RegisterPage() {
   useEffect(() => {
     if (state.success) {
       toast.success(state.message);
-      // Redirect to login after successful registration
-      setTimeout(() => router.push("/login"), 1500);
+      // Redirect to login after successful registration, carrying over callbackUrl
+      setTimeout(() => {
+        router.push(callbackUrl ? `/login?callbackUrl=${callbackUrl}` : "/login");
+      }, 1500);
     } else if (state.message && !state.success) {
       toast.error(state.message);
     }
@@ -85,11 +89,19 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter className="flex justify-center text-sm text-muted-foreground border-t pt-6">
           Already have an account? 
-          <Link href="/login" className="text-primary hover:underline ml-1 font-medium">
+          <Link href={callbackUrl ? `/login?callbackUrl=${callbackUrl}` : "/login"} className="text-primary hover:underline ml-1 font-medium">
             Log in
           </Link>
         </CardFooter>
       </Card>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <RegisterContent />
+    </Suspense>
   );
 }

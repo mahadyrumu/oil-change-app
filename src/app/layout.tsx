@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { QueryProvider } from "@/components/providers/query-provider";
+import { GlobalStateProvider } from "@/components/providers/global-context";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -29,7 +31,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <QueryProvider>
+            <GlobalStateProvider>
+              {children}
+            </GlobalStateProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

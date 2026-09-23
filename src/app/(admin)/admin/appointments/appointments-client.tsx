@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AppointmentFormModal } from "./appointment-form-modal";
 import { deleteAppointment } from "@/lib/actions/admin-actions";
 import { toast } from "sonner";
+import { PaginationControls } from "@/components/ui/pagination-controls";
 
 export function AppointmentsClient({ 
   appointments, 
@@ -23,7 +24,7 @@ export function AppointmentsClient({
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -117,9 +118,18 @@ export function AppointmentsClient({
       </div>
 
       <Card>
+        <PaginationControls 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          totalItems={filteredAppointments.length}
+          totalPages={totalPages}
+          startIndex={startIndex}
+        />
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+            <table className="w-full text-sm text-left hidden md:table">
               <thead className="text-xs uppercase bg-muted/50 border-b">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Customer</th>
@@ -169,39 +179,61 @@ export function AppointmentsClient({
                 )}
               </tbody>
             </table>
+
+            {/* Mobile View */}
+            <div className="flex flex-col gap-4 p-4 md:hidden">
+              {currentAppointments.length === 0 ? (
+                <div className="text-center p-8 text-muted-foreground border rounded-lg bg-muted/20">
+                  No appointments found.
+                </div>
+              ) : (
+                currentAppointments.map((apt) => (
+                  <div key={apt.id} className="flex flex-col p-4 border rounded-xl bg-background shadow-sm space-y-4">
+                    <div className="flex justify-between items-start">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-foreground text-base">{apt.user?.name || 'Unknown'}</span>
+                        <span className="text-sm text-muted-foreground">{apt.user?.email}</span>
+                      </div>
+                      <div>{getStatusBadge(apt.status)}</div>
+                    </div>
+                    
+                    <div className="flex flex-col bg-muted/30 p-3 rounded-lg border space-y-2">
+                      <div className="flex justify-between items-center border-b pb-2">
+                        <span className="font-medium text-sm">{apt.service.name}</span>
+                        <span className="font-bold text-sm">${apt.service.price.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs text-muted-foreground pt-1">
+                        <span>{format(new Date(apt.date), "MMM d, yyyy")}</span>
+                        <span>{format(new Date(apt.date), "h:mm a")}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-end gap-2 pt-2 border-t">
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(apt)}>
+                        <Edit className="w-4 h-4 mr-2" /> Edit
+                      </Button>
+                      <Button variant="outline" size="sm" className="text-destructive hover:bg-destructive/10" onClick={() => handleDelete(apt.id)}>
+                        <Trash2 className="w-4 h-4 mr-2" /> Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
           
           {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between p-4 border-t">
-              <div className="text-sm text-muted-foreground">
-                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredAppointments.length)} of {filteredAppointments.length} entries
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                <div className="text-sm font-medium w-16 text-center">
-                  Page {currentPage} of {totalPages}
-                </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          )}
+          <div className="border-t">
+            <PaginationControls 
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              setItemsPerPage={setItemsPerPage}
+              totalItems={filteredAppointments.length}
+              totalPages={totalPages}
+              startIndex={startIndex}
+            />
+          </div>
         </CardContent>
       </Card>
 

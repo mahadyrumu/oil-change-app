@@ -40,7 +40,7 @@ export default async function BookPage() {
       
       <div className="bg-card border rounded-xl shadow-sm p-6 md:p-10">
         {services.length > 0 ? (
-          <BookingForm services={services} userId={session.user.id} />
+          <BookingForm services={services} isAuthenticated={!!session?.user?.id} />
         ) : (
           <div className="text-center py-20 text-muted-foreground">
             No services are currently available for booking. Please check back later.

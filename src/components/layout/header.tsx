@@ -133,15 +133,17 @@ export function Header({ session }: { session: Session | null }) {
                   Log in
                 </Link>
               )}
-              <Link 
-                href="/book" 
-                className={cn(
-                  buttonVariants({ size: "sm" }), 
-                  "rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all font-bold px-6 h-10"
-                )}
-              >
-                Book Appointment
-              </Link>
+              {pathname !== '/dashboard' && (
+                <Link 
+                  href="/book" 
+                  className={cn(
+                    buttonVariants({ size: "sm" }), 
+                    "rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all font-bold px-6 h-10"
+                  )}
+                >
+                  Book Appointment
+                </Link>
+              )}
               <ThemeToggle />
             </div>
 
@@ -224,13 +226,15 @@ export function Header({ session }: { session: Session | null }) {
                   Log in
                 </Link>
               )}
-              <Link 
-                href="/book" 
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(buttonVariants({ size: "lg" }), "w-full rounded-full shadow-xl shadow-primary/20 font-semibold h-12")}
-              >
-                Book Appointment
-              </Link>
+              {pathname !== '/dashboard' && (
+                <Link 
+                  href="/book" 
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={cn(buttonVariants({ size: "lg" }), "w-full rounded-full shadow-xl shadow-primary/20 font-semibold h-12")}
+                >
+                  Book Appointment
+                </Link>
+              )}
             </div>
           </motion.div>
         )}

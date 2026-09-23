@@ -10,12 +10,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CustomerFormModal } from "./customer-form-modal";
 import { toggleCustomerActiveStatus } from "@/lib/actions/admin-actions";
 import { toast } from "sonner";
+import { PaginationControls } from "@/components/ui/pagination-controls";
 
 export function CustomersClient({ customers }: { customers: any[] }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -99,9 +100,18 @@ export function CustomersClient({ customers }: { customers: any[] }) {
       </div>
 
       <Card>
+        <PaginationControls 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={setItemsPerPage}
+          totalItems={filteredCustomers.length}
+          totalPages={totalPages}
+          startIndex={startIndex}
+        />
         <CardContent className="p-0">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+            <table className="w-full text-sm text-left hidden md:table">
               <thead className="text-xs uppercase bg-muted/50 border-b">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Name</th>
@@ -166,39 +176,80 @@ export function CustomersClient({ customers }: { customers: any[] }) {
                 )}
               </tbody>
             </table>
+
+            {/* Mobile View */}
+            <div className="flex flex-col gap-4 p-4 md:hidden">
+              {currentCustomers.length === 0 ? (
+                <div className="text-center p-8 text-muted-foreground border rounded-lg bg-muted/20">
+                  No customers found.
+                </div>
+              ) : (
+                currentCustomers.map((customer) => (
+                  <div key={customer.id} className={`flex flex-col p-4 border rounded-xl bg-background shadow-sm space-y-4 ${!customer.isActive ? 'opacity-60' : ''}`}>
+                    <div className="flex justify-between items-start">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-foreground text-base">{customer.name || 'N/A'}</span>
+                        <span className="text-sm text-muted-foreground">{customer.email}</span>
+                      </div>
+                      <div>
+                        <span className={`text-xs font-semibold px-2.5 py-1 rounded-full uppercase ${
+                          customer.isActive 
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                            : 'bg-muted text-muted-foreground'
+                        }`}>
+                          {customer.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center bg-muted/30 p-3 rounded-lg border">
+                      <div className="flex flex-col">
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Joined</span>
+                        <span className="text-sm font-medium">{format(new Date(customer.createdAt), "MMM d, yyyy")}</span>
+                      </div>
+                      <div className="flex flex-col items-end">
+                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Bookings</span>
+                        <span className="inline-flex items-center justify-center bg-primary/10 text-primary font-bold w-6 h-6 rounded-full text-xs">
+                          {customer._count?.appointments || 0}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-end gap-2 pt-2 border-t">
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(customer)}>
+                        <Edit className="w-4 h-4 mr-2" /> Edit
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className={customer.isActive ? "text-amber-500 hover:bg-amber-500/10" : "text-green-500 hover:bg-green-500/10"} 
+                        onClick={() => handleToggleStatus(customer.id, customer.isActive)}
+                      >
+                        {customer.isActive ? (
+                          <><PowerOff className="w-4 h-4 mr-2" /> Deactivate</>
+                        ) : (
+                          <><Power className="w-4 h-4 mr-2" /> Activate</>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
           
           {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between p-4 border-t">
-              <div className="text-sm text-muted-foreground">
-                Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredCustomers.length)} of {filteredCustomers.length} entries
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                <div className="text-sm font-medium w-16 text-center">
-                  Page {currentPage} of {totalPages}
-                </div>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-8 w-8"
-                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-          )}
+          <div className="border-t">
+            <PaginationControls 
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              setItemsPerPage={setItemsPerPage}
+              totalItems={filteredCustomers.length}
+              totalPages={totalPages}
+              startIndex={startIndex}
+            />
+          </div>
         </CardContent>
       </Card>
 

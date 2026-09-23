@@ -4,13 +4,21 @@ import Link from "next/link";
 import { ShieldCheck, Droplets, Settings, Zap, ArrowRight, Activity, TrendingUp, Navigation2, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
+import { BookingForm } from "@/components/booking-form";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/db";
 
 export const metadata = {
   title: "Services - AutoCare",
   description: "Smart AI vehicle tracking and auto care services.",
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const session = await auth();
+  const services = await prisma.service.findMany({
+    orderBy: { price: 'asc' }
+  });
+
   return (
     <div className="flex flex-col min-h-screen bg-background selection:bg-secondary/30 selection:text-secondary dark:text-primary">
       
@@ -162,57 +170,61 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Deep Blue CTA Pre-Footer */}
-      <section className="py-24 px-4 bg-[#233876] text-white relative overflow-hidden">
-        <div className="container mx-auto max-w-[1400px] relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight max-w-xl">
-                Ready for a smoother ride?
-              </h2>
-              <p className="text-white/80 font-medium text-lg max-w-md leading-relaxed">
-                Visit our state-of-the-art facility today, or book online to secure your zero-wait appointment.
-              </p>
-              <div className="flex flex-wrap gap-4 mt-8">
-                <Link 
-                  href="/book" 
-                  className={cn(
-                    buttonVariants({ size: "lg" }), 
-                    "h-14 px-8 rounded-full shadow-xl font-bold text-base bg-secondary hover:bg-secondary/90 text-secondary-foreground border-0"
-                  )}
-                >
-                  Book Appointment
-                </Link>
-                <Link 
-                  href="/contact" 
-                  className={cn(
-                    buttonVariants({ size: "lg" }), 
-                    "h-14 px-8 rounded-full bg-white text-[#1e3066] hover:bg-white/90 border-0 font-bold text-base"
-                  )}
-                >
-                  Contact Us
-                </Link>
+      {/* Viewport-fitted Booking Section */}
+      <section className="min-h-[calc(100dvh-80px)] px-4 bg-[#233876] text-white flex items-center relative overflow-hidden">
+        {/* Subtle background glows */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+
+        <div className="container mx-auto max-w-3xl relative z-10 w-full py-8 flex flex-col items-center gap-6">
+
+          {/* Header — centered above the form */}
+          <div className="text-center space-y-3">
+            <p className="text-secondary dark:text-primary uppercase tracking-[0.2em] text-xs font-bold">
+              Book a Service
+            </p>
+            <h2 className="text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.1]">
+              Ready for a <span className="text-secondary dark:text-primary">smoother</span> ride?
+            </h2>
+            <p className="text-white/70 text-base md:text-lg font-medium leading-relaxed max-w-lg mx-auto">
+              Select a service, pick a date and time. We guarantee you'll be in and out in{" "}
+              <span className="text-white font-bold">under 30 minutes.</span>
+            </p>
+          </div>
+
+          {/* Form Card */}
+          <div className="w-full bg-card text-foreground rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
+            {services.length > 0 ? (
+              <BookingForm services={services} isAuthenticated={!!session?.user?.id} />
+            ) : (
+              <div className="text-center py-16 text-muted-foreground">
+                No services are currently available for booking. Please check back later.
+              </div>
+            )}
+          </div>
+
+          {/* Info pills — horizontally centered below form */}
+          <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-4 py-2.5">
+              <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center shrink-0">
+                <Navigation2 className="w-3.5 h-3.5 text-white" />
+              </div>
+              <div>
+                <p className="text-white/50 text-[10px] font-bold uppercase tracking-wider">Location</p>
+                <p className="text-white font-semibold text-xs">123 AutoCare Way, Motor City, MI</p>
               </div>
             </div>
-            
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div className="bg-[#1e3066] p-8 rounded-[2rem] border border-white/5">
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-6">
-                  <Navigation2 className="w-5 h-5 text-white" />
-                </div>
-                <h3 className="font-bold text-white mb-2 text-lg">Location</h3>
-                <p className="text-white/70 text-sm font-medium">123 AutoCare Way<br/>Motor City, MI 48201</p>
+            <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-4 py-2.5">
+              <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center shrink-0">
+                <Phone className="w-3.5 h-3.5 text-white" />
               </div>
-              
-              <div className="bg-[#1e3066] p-8 rounded-[2rem] border border-white/5">
-                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-6">
-                  <Phone className="w-5 h-5 text-white" />
-                </div>
-                <h3 className="font-bold text-white mb-2 text-lg">Phone</h3>
-                <p className="text-white/70 text-sm font-medium">+1 (555) 123-4567<br/>Mon-Sat: 8am - 6pm</p>
+              <div>
+                <p className="text-white/50 text-[10px] font-bold uppercase tracking-wider">Phone · Mon–Sat 8am–6pm</p>
+                <p className="text-white font-semibold text-xs">+1 (555) 123-4567</p>
               </div>
             </div>
           </div>
+
         </div>
       </section>
 

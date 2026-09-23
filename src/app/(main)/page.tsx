@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, ShieldCheck, Wrench, CheckCircle2, Navigation2, Star, Zap, Clock, Phone } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { cn } from "@/lib/utils";
@@ -75,9 +75,9 @@ export default async function HomePage() {
                   Book Appointment <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
                 <div className="flex -space-x-3 ml-4">
-                   <img className="w-10 h-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/100?img=1" alt="User" />
-                   <img className="w-10 h-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/100?img=2" alt="User" />
-                   <img className="w-10 h-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/100?img=3" alt="User" />
+                   <Image width={40} height={40} className="w-10 h-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/100?img=1" alt="User" />
+                   <Image width={40} height={40} className="w-10 h-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/100?img=2" alt="User" />
+                   <Image width={40} height={40} className="w-10 h-10 rounded-full border-2 border-background" src="https://i.pravatar.cc/100?img=3" alt="User" />
                    <div className="w-10 h-10 rounded-full border-2 border-background bg-muted flex items-center justify-center text-xs font-bold text-foreground">
                      10k+
                    </div>
@@ -274,7 +274,7 @@ export default async function HomePage() {
                     <Star className="w-5 h-5 fill-current" />
                   </div>
                   <p className="text-muted-foreground font-medium italic mb-8 flex-1 leading-relaxed">
-                    "{testimonial.review}"
+                    &quot;{testimonial.review}&quot;
                   </p>
                   <div className="flex items-center gap-4 mt-auto">
                     <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center text-secondary dark:text-primary font-bold text-lg">

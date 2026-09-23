@@ -9,7 +9,7 @@ const contactSchema = z.object({
   message: z.string().min(10, "Message must be at least 10 characters.")
 });
 
-export async function submitContactForm(prevState: any, formData: FormData) {
+export async function submitContactForm(prevState: unknown, formData: FormData) {
   // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 1000));
 

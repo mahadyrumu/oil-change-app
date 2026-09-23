@@ -64,8 +64,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-bold text-foreground">Business Address</h3>
                       <p className="text-sm text-muted-foreground font-medium mb-1">Visit our main service center.</p>
-                      <p className="font-semibold text-foreground">123 AutoCare Way<br/>Motor City, MI 48201</p>
-                      <a href="/location" className="text-secondary dark:text-primary text-sm font-bold mt-2 inline-block hover:underline">View on map →</a>
+                      <p className="font-semibold text-foreground">123 Manhattan Ave<br/>New York, NY 10025</p>
                     </div>
                   </div>
                 </div>
@@ -85,6 +84,30 @@ export default function ContactPage() {
             </div>
             
           </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="pb-16 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <FadeIn delay={0.3}>
+            <div className="w-full h-[400px] rounded-[2rem] overflow-hidden border border-border shadow-2xl relative bg-muted">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.012558611802!2d-73.98782352341271!3d40.76173003456382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1692225251649!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen={false}
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full grayscale-[0.5] contrast-[1.1] dark:invert-[0.9] dark:hue-rotate-180 dark:contrast-[1.2] opacity-90 transition-opacity hover:opacity-100"
+              />
+              <div className="absolute top-6 left-6 bg-background/80 backdrop-blur-md border border-border px-4 py-2 rounded-xl shadow-lg pointer-events-none">
+                <p className="font-bold text-sm text-foreground">Manhattan Service Center</p>
+                <p className="text-xs font-medium text-muted-foreground">Find us in the heart of the city.</p>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </div>
