@@ -36,9 +36,9 @@ function fromTimeInput(val: string): string {
   return `${h12.toString().padStart(2, "0")}:${min} ${ap}`;
 }
 
-export function BookingForm({ services, isAuthenticated }: { services: Service[], isAuthenticated: boolean }) {
+export function BookingForm({ services, isAuthenticated, defaultServiceId = "" }: { services: Service[], isAuthenticated: boolean, defaultServiceId?: string }) {
   const router = useRouter();
-  const [selectedService, setSelectedService] = useState<string>("");
+  const [selectedService, setSelectedService] = useState<string>(defaultServiceId);
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<string>("");
   const [isRedirecting, setIsRedirecting] = useState(false);

@@ -9,21 +9,21 @@ export default function PricingPage() {
   const packages = [
     {
       name: "Standard Oil Change",
-      price: "40",
+      price: "39.99",
       description: "Conventional motor oil change, replace oil filter, and check fluid levels.",
       features: ["Premium Filter Replacement", "Multi-Point Inspection", "Fluid Level Top-Off", "Tire Pressure Check"],
       popular: false,
     },
     {
-      name: "High Mileage",
-      price: "60",
+      name: "High Mileage Oil Change",
+      price: "59.99",
       description: "Specially formulated for vehicles over 75,000 miles. Helps prevent leaks.",
       features: ["Everything in Standard", "High Mileage Additives", "Seal Conditioners", "Battery Health Test"],
       popular: true,
     },
     {
-      name: "Full Synthetic",
-      price: "80",
+      name: "Full Synthetic Oil Change",
+      price: "79.99",
       description: "Maximum protection for your engine. Includes comprehensive fluid check.",
       features: ["Everything in High Mileage", "100% Synthetic Fluid", "Extended Drain Interval", "Brake Pad Inspection"],
       popular: false,
@@ -84,7 +84,7 @@ export default function PricingPage() {
                   </ul>
 
                   <Link 
-                    href="/services#booking"
+                    href={`/services?service=${encodeURIComponent(pkg.name)}#booking`}
                     className={cn(
                       buttonVariants({ variant: pkg.popular ? "default" : "outline", size: "sm" }),
                       "w-full rounded-xl h-10 font-bold text-sm shrink-0 mt-auto",

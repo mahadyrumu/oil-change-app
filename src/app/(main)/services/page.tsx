@@ -13,11 +13,22 @@ export const metadata = {
   description: "Smart AI vehicle tracking and auto care services.",
 };
 
-export default async function ServicesPage() {
+export default async function ServicesPage(props: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+  const searchParams = await props.searchParams;
+  const serviceQuery = typeof searchParams?.service === 'string' ? searchParams.service : undefined;
+
   const session = await auth();
   const services = await prisma.service.findMany({
     orderBy: { price: 'asc' }
   });
+
+  let defaultServiceId = "";
+  if (serviceQuery) {
+    const matchedService = services.find(s => s.name.toLowerCase().includes(serviceQuery.toLowerCase()));
+    if (matchedService) {
+      defaultServiceId = matchedService.id;
+    }
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-background selection:bg-secondary/30 selection:text-secondary dark:text-primary">
@@ -195,7 +206,7 @@ export default async function ServicesPage() {
           {/* Form Card */}
           <div className="w-full bg-card text-foreground rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
             {services.length > 0 ? (
-              <BookingForm services={services} isAuthenticated={!!session?.user?.id} />
+              <BookingForm services={services} isAuthenticated={!!session?.user?.id} defaultServiceId={defaultServiceId} />
             ) : (
               <div className="text-center py-16 text-muted-foreground">
                 No services are currently available for booking. Please check back later.
