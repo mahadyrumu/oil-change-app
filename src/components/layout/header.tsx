@@ -135,7 +135,7 @@ export function Header({ session }: { session: Session | null }) {
               )}
               {pathname !== '/dashboard' && (
                 <Link 
-                  href="/book" 
+                  href="/services#booking" 
                   className={cn(
                     buttonVariants({ size: "sm" }), 
                     "rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-0.5 transition-all font-bold px-6 h-10"
@@ -228,7 +228,7 @@ export function Header({ session }: { session: Session | null }) {
               )}
               {pathname !== '/dashboard' && (
                 <Link 
-                  href="/book" 
+                  href="/services#booking" 
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(buttonVariants({ size: "lg" }), "w-full rounded-full shadow-xl shadow-primary/20 font-semibold h-12")}
                 >

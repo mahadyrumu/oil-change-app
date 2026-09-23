@@ -66,7 +66,7 @@ export default async function HomePage() {
               
               <FadeIn delay={0.4} className="flex flex-wrap items-center gap-4 pt-4">
                 <Link 
-                  href="/book" 
+                  href="/services#booking" 
                   className={cn(
                     buttonVariants({ size: "lg" }), 
                     "h-14 px-8 rounded-full shadow-lg shadow-primary/20 dark:shadow-secondary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300 font-bold text-base"
@@ -233,7 +233,7 @@ export default async function HomePage() {
                       <span className="text-4xl font-bold text-foreground">${service.price.toFixed(0)}</span>
                     </div>
                     <Link 
-                      href={`/book?serviceId=${service.id}`}
+                      href={`/services?serviceId=${service.id}#booking`}
                       className={cn(
                         buttonVariants({ variant: index === 1 ? "default" : "outline" }), 
                         "w-full h-14 rounded-2xl font-bold text-base transition-all dark:border-white/20"
@@ -308,7 +308,7 @@ export default async function HomePage() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link 
-                  href="/book" 
+                  href="/services#booking" 
                   className={cn(
                     buttonVariants({ size: "lg", variant: "secondary" }), 
                     "h-14 px-8 rounded-full shadow-xl font-bold text-base"

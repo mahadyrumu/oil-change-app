@@ -30,7 +30,7 @@ export default async function DashboardPage() {
           <h1 className="text-3xl font-bold tracking-tight">Welcome, {session.user.name || 'User'}</h1>
           <p className="text-muted-foreground">Manage your appointments and vehicle service history.</p>
         </div>
-        <Link href="/book">
+        <Link href="/services#booking">
           <Button className="rounded-full shadow-lg hover:shadow-xl transition-all">
             <PlusCircle className="w-4 h-4 mr-2" />
             Book New Appointment

@@ -171,7 +171,7 @@ export default async function ServicesPage() {
       </section>
 
       {/* Viewport-fitted Booking Section */}
-      <section className="min-h-[calc(100dvh-80px)] px-4 bg-[#233876] text-white flex items-center relative overflow-hidden">
+      <section id="booking" className="min-h-[calc(100dvh-80px)] px-4 bg-[#233876] text-white flex items-center relative overflow-hidden">
         {/* Subtle background glows */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
