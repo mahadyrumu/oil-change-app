@@ -4,13 +4,17 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/ui/fade-in';
 
 // Mock framer-motion since we are testing components wrapping motion
 jest.mock('framer-motion', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const React = require('react');
+  const MotionDiv = React.forwardRef((props: any, ref: any) => {
+    const { viewport, variants, transition, ...rest } = props;
+    return <div ref={ref} {...rest} />;
+  });
+  MotionDiv.displayName = 'MotionDiv';
+  
   return {
     motion: {
-      div: React.forwardRef((props: any, ref: any) => {
-        const { viewport, variants, transition, ...rest } = props;
-        return <div ref={ref} {...rest} />;
-      }),
+      div: MotionDiv,
     },
   };
 });
