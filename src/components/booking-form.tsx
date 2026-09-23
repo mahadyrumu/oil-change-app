@@ -44,6 +44,7 @@ export function BookingForm({ services, isAuthenticated }: { services: Service[]
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [calOpen, setCalOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -63,6 +64,7 @@ export function BookingForm({ services, isAuthenticated }: { services: Service[]
   useEffect(() => {
     if (state.success) {
       toast.success(state.message);
+      setIsNavigating(true);
       router.push("/dashboard");
     } else if (state.message) {
       toast.error(state.message);
@@ -222,10 +224,10 @@ export function BookingForm({ services, isAuthenticated }: { services: Service[]
       {isAuthenticated ? (
         <Button
           type="submit"
-          disabled={isPendingServer || !selectedService || !date || !time}
+          disabled={isPendingServer || isNavigating || !selectedService || !date || !time}
           className="w-full h-11 text-sm font-bold rounded-xl bg-secondary dark:bg-primary hover:bg-secondary/90 dark:hover:bg-primary/90 text-white border-0 shadow-lg"
         >
-          {isPendingServer
+          {isPendingServer || isNavigating
             ? <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />Confirming...</span>
             : "Confirm Booking"}
         </Button>

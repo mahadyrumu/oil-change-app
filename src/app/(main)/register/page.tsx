@@ -1,7 +1,8 @@
 "use client"
 
-import { useActionState, useEffect, Suspense } from "react";
+import { useActionState, useEffect, Suspense, useState } from "react";
 import { registerAction } from "@/lib/actions/auth";
+import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -19,10 +20,12 @@ function RegisterContent() {
     message: "", 
     errors: {} 
   });
+  const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     if (state.success) {
       toast.success(state.message);
+      setIsNavigating(true);
       // Redirect to login after successful registration, carrying over callbackUrl
       setTimeout(() => {
         router.push(callbackUrl ? `/login?callbackUrl=${callbackUrl}` : "/login");
@@ -82,8 +85,10 @@ function RegisterContent() {
               )}
             </div>
 
-            <Button type="submit" className="w-full mt-4" disabled={isPending}>
-              {isPending ? "Creating Account..." : "Create Account"}
+            <Button type="submit" className="w-full mt-4" disabled={isPending || isNavigating}>
+              {isPending || isNavigating ? (
+                <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />Creating Account...</span>
+              ) : "Create Account"}
             </Button>
           </form>
         </CardContent>

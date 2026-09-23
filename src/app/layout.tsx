@@ -6,6 +6,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { GlobalStateProvider } from "@/components/providers/global-context";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
         >
           <QueryProvider>
             <GlobalStateProvider>
+              <NextTopLoader color="#22c55e" showSpinner={false} />
               {children}
             </GlobalStateProvider>
           </QueryProvider>

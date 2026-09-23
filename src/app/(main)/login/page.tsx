@@ -1,7 +1,8 @@
 "use client"
 
-import { useActionState, useEffect, Suspense } from "react";
+import { useActionState, useEffect, Suspense, useState } from "react";
 import { loginAction } from "@/lib/actions/auth";
+import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -19,10 +20,12 @@ function LoginContent() {
     message: "", 
     errors: {} 
   });
+  const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     if (state.success) {
       toast.success(state.message);
+      setIsNavigating(true);
       // Hard redirect to ensure Next.js session cookie is fully propagated.
       // router.push() is a client-side navigation that can race with the newly
       // set session cookie; window.location.href forces a full browser reload.
@@ -72,8 +75,10 @@ function LoginContent() {
               )}
             </div>
 
-            <Button type="submit" className="w-full mt-4" disabled={isPending}>
-              {isPending ? "Signing in..." : "Sign In"}
+            <Button type="submit" className="w-full mt-4" disabled={isPending || isNavigating}>
+              {isPending || isNavigating ? (
+                <span className="flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />Signing in...</span>
+              ) : "Sign In"}
             </Button>
           </form>
         </CardContent>
